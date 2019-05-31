@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Basic</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .one {
+            color: green;
+        }
+        .two {
+            text-decoration: line-through;
+        }
+        .canvas {
+            width: 300px;
+            height: 300px;
+            background-color: #ddd;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vue Basics</h1>
+    <div id="app">
+        <h2>{{ title }}</h2>
+        <p>{{ greet('morning') }}</p>
+
+        <!--
+            Data Binding in VueJS:
+            In HTML attributes you can't just outputing data from vue instance,
+            you need to bind the attributes first like this:
+            <a href="{{ url }}"></a> -> Wrong
+            <a v-bind:href="url"></a> -> Right
+            <a :href="url"></a> -> Shorter syntax
+         -->
+
+        <a v-bind:href="url" target="_blank">YouTube</a>
+
+        <!-- You can bind array data too -->
+        <p :class="classes">Classes</p>
+
+        <hr>
+
+        <!--
+            Events
+            Use v-on: or @ to bind event
+        -->
+        <h2>Number counter: {{ numb }}</h2>
+        <button v-on:click="changeCounter(1)">Increase</button>
+        <button v-on:click="changeCounter(-1)">Decrease</button>
+
+        <hr>
+
+        <!--
+            Event Object
+         -->
+        <h2>Event Object</h2>
+        <div class="canvas" @mousemove="logCoordinates"></div>
+        <p>Mouse Position: {{ mouse.x }}, {{ mouse.y }}</p>
+
+        <hr>
+
+        <!--
+            Keyboard events:
+            - keyup - Trigger ketika keyboard naik ke atas / setelah ditekan
+            - keydown - Trigger ketika keyboard ditekan (akan tertinggal 1 pencetan dari keyup)
+
+            Contoh:
+         -->
+
+        <h2>Hello my name is {{ name }}</h2>
+
+        <input type="text" @keyup="updateName">
+        <input type="text" @keypress="updateName">
+
+        <hr>
+
+        <!-- Two way data binding -->
+        <h2>This is two way data binding! Result: {{ result }}</h2>
+        <input type="text" placeholder="Type something, and look the changes!" v-model="result" style="width: 300px;">
+        <h2>This is two way data binding! Result: {{ result }}</h2>
+
+        <!-- Modifiers, ex: keyboard, events, etc. Docs: https://vuejs.org/v2/guide/syntax.html#Modifiers -->
+        <button @click.alt="altClick">Alt + Click me & check the console!</button>
+        <!-- Prevent default modifier -->
+        <a href="https://www.google.com" @click.prevent>Google</a>
+
+        <hr>
+
+        <!--
+            If conditional statement
+            In vue you can show/hide element based on true/false value of variables
+
+            For example:
+        -->
+
+        <p v-if="showName">AXOLA</p>
+        <p v-else-if="showAge">23</p>
+        <button @click="toogleName">Show name: {{ showName }}</button>
+        <button @click="toogleAge">Show age: {{ showAge }}</button>
+
+        <hr>
+
+        <!-- Loops -->
+        <ol>
+            <li v-for="(avenger, index) in avengers">{{ avenger }}</li>
+        </ol>
+
+        <ul v-for="bio in avengersBio">
+            <li>Name: {{ bio.name }}</li>
+            <li>Age: {{ bio.age }}</li>
+        </ul>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
