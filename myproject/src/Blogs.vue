@@ -1,8 +1,9 @@
 <template>
     <div>
         <h2>{{ title }}</h2>
+        <input type="search" id="searchTitle" placeholder="Search post title here..." v-model="searchTitle">
         <!-- <button @click="changeTitle">Change title</button> -->
-        <div v-for="post in posts" :key="post.id">
+        <div v-for="post in filteredPosts" :key="post.id">
             <h3 class="post-title">{{ post.title }}</h3>
 
             <!--
@@ -24,13 +25,21 @@ export default {
     data() {
         return {
             title: "Blogs",
-            posts: []
+            posts: [],
+            searchTitle: "",
         }
     },
     methods: {
         // changeTitle() {
         //     this.title = "This is the new title!"
         // }
+    },
+    computed: { // change data without updating the initial properties
+        filteredPosts() {
+            return this.posts.filter( post => {
+                return post.title.match(this.searchTitle)
+            })
+        }
     },
     // beforeCreate() {
     //     // When component init
@@ -52,9 +61,14 @@ export default {
 </script>
 
 <style>
+    #searchTitle {
+        background-color: white;
+    }
+
     .post-title {
         text-transform: capitalize;
     }
+
     .post-body {
         text-align: justify;
     }

@@ -5,6 +5,7 @@ import { Home, About, Profile } from "@/components";
 Vue.use(Router)
 
 export default new Router({
+    mode: 'history', // to removeing the HASH symbol in every routes
     routes: [
         {
             path: '/',
